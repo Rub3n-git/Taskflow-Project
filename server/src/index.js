@@ -5,11 +5,14 @@ const taskRoutes = require('./routes/task.routes');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin:'http://taskflow-project-tau-mauve.vercel.app'
+
+}));
 
 //MIDDLEWARES GLOBALES
 
-app.use(cors());
+
 app.use(express.json());
 app.use('/api/v1/tasks', taskRoutes);
 
