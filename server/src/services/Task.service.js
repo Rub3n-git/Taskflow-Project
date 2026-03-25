@@ -22,4 +22,4 @@ const eliminarTarea = (id) => {
     }
     task.splice(index, 1);
 };
-module.exports ={ obtenerTodas, crearTarea, eliminarTarea };
+module.exports ={ obtenerTodas, crearTarea, eliminarTarea }
