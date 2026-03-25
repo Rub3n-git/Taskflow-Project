@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/v1/tasks';
+const API_URL = 'https://taskflow-project-git-master-rub3n-gits-projects.vercel.app/api/v1/tasks';
 
 async function obtenerTareas() {
     const respuesta = await fetch(API_URL);
