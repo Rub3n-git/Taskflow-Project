@@ -7,7 +7,7 @@ const app = express();
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     if (req.method === 'OPTIONS') {
         return res.status(200).send();
@@ -16,6 +16,8 @@ app.use((req, res, next) => {
 });
 
 app.use(cors());
+//MIDDLEWARES GLOBALES
+
 
 app.use(express.json());
 app.use('/api/v1/tasks', taskRoutes);
@@ -24,20 +26,19 @@ app.get('/', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
 });
 
+
 app.use((err, req, res, next) => {
-    if (err.message === 'NOT_FOUND') {
-        return res.status(404).json({ error: 'Tarea no encontrada' });
+    if (err.message ==='NOT_FOUND') {
+        return res.status (404).json({error:'Tarea no encontrada'});
     }
     console.error(err);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({error:'Error interno del servidor'});
+
+    });
+
+//ARRANQUE DEL SERVIDOR
+
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-// ✅ Solo arranca el servidor en local, no en Vercel
-if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Servidor escuchando en el puerto ${PORT}`);
-    });
-}
-
-// ✅ Exporta la app para que Vercel pueda usarla como función serverless
-module.exports = app;
