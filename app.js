@@ -240,7 +240,7 @@ async function eliminarTarea(id) {
 function completarTodas() {
     tareas = tareas.map(t => ({ ...t, completada: true }));
     renderizarTareas();
-    guardarTareas();
+    
 }
 
 /**
@@ -249,7 +249,7 @@ function completarTodas() {
 function borrarCompletadas() {
     tareas = tareas.filter(t => !t.completada);
     renderizarTareas();
-    guardarTareas();
+
 }
 
 // ─── EDICIÓN DE TAREAS ───────────────────────────────────────────────────────
