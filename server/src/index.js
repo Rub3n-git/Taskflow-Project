@@ -6,7 +6,7 @@ const taskRoutes = require('./routes/task.routes');
 const app = express();
 
 app.use(cors({
-    origin:'http://taskflow-project-tau-mauve.vercel.app'
+    origin:'https://taskflow-project-tau-mauve.vercel.app'
 
 }));
 
