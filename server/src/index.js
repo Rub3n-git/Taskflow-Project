@@ -6,10 +6,8 @@ const taskRoutes = require('./routes/task.routes');
 const app = express();
 
 app.use(cors({
-    origin:'https://taskflow-project-tau-mauve.vercel.app'
-
+    origin: 'https://taskflow-project-zi3j.vercel.app'
 }));
-
 //MIDDLEWARES GLOBALES
 
 
