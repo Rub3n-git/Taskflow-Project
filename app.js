@@ -179,9 +179,9 @@ async function cargarTareas() {
 async function agregarTarea(titulo, prioridad = "media") {
     const tituloLimpio = titulo.trim();
     if (tituloLimpio === "") return false;
-
+//// CORREGIDO: AÑADIDO PRIORIDAD PARA QUE PROCESE
     try {
-        const nuevaTarea =  await crearTarea(tituloLimpio);
+        const nuevaTarea =  await crearTarea(tituloLimpio, prioridad);
             nuevaTarea.prioridad = prioridad;
             nuevaTarea.creadaEn = new Date().toLocaleDateString("es-ES");
             tareas.push(nuevaTarea);
@@ -197,14 +197,24 @@ async function agregarTarea(titulo, prioridad = "media") {
  * Alterna el estado completado/pendiente de una tarea.
  * @param {number} id - ID de la tarea a alternar
  */
-function toggleCompletar(id) {
+
+//// CORREGIDO: AÑADIDO "ASYNC" Y GUARDARTAREAS NO EXISTIA EN USO
+// ✅ Código corregido:
+async function toggleCompletar(id) {
     const tarea = tareas.find(t => t.id === id);
     if (tarea) {
         tarea.completada = !tarea.completada;
-        renderizarTareas();
-        guardarTareas();
+        try {
+            await actualizarTarea(id, { completada: tarea.completada });
+            renderizarTareas();
+        } catch (error) {
+            // Revertir si la API falla
+            tarea.completada = !tarea.completada;
+            console.error("Error al actualizar tarea:", error);
+        }
     }
 }
+
 
 /**
  * Elimina una tarea del array por su ID.
@@ -265,12 +275,14 @@ function editarTarea(id) {
     `;
     document.getElementById(`input-editar-${id}`).focus();
 }
-
-/*]
+/// CORREGIDO: ERROR DE TIPOGRAFICO QUE ROMPIA EL ARCHIVO
+/*
  * Guarda el nuevo título de una tarea editada.
  * @param {number} id - ID de la tarea que se está editando
  */
-function guardarEdicion(id) {
+
+/// CORREGIDO: ASYNC AÑADIDO Y OTRA VEZ GUARDARTAREAS NO EXISTE
+async function guardarEdicion(id) {
     const input = document.getElementById(`input-editar-${id}`);
     const nuevoTitulo = input.value.trim();
     if (nuevoTitulo === "") return;
@@ -278,7 +290,7 @@ function guardarEdicion(id) {
     const tarea = tareas.find(t => t.id === id);
     if (tarea) {
         tarea.titulo = nuevoTitulo;
-        guardarTareas();
+        await actualizarTarea(id, { titulo: nuevoTitulo }); // ← añadir esto
         renderizarTareas();
     }
 }
